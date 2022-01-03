@@ -39,7 +39,7 @@ class Emp {
             totalWage+= DailyWage;
         }
     }
-    public String Tostring()
+    public String toString()
     {
         return "Company= "+company+" Total wage= "+totalWage;
     }
@@ -49,12 +49,12 @@ class EmployeeWageBuilder
     public  static void  main(String[] args)
     {
         System.out.println("Welcome To Employee Wage Builder");
-        Emp obj1=new Emp("TCS",200,4,20);
-        obj1.computeWage();
-        System.out.println(obj1.Tostring());
-        Emp obj2=new Emp("Infosys",250,4,20);
-        obj2.computeWage();
-        System.out.println(obj2.Tostring());
+        Emp Tcs=new Emp("TCS",200,4,20);
+        Tcs.computeWage();
+        System.out.println(Tcs);
+        Emp Infosys=new Emp("Infosys",250,4,20);
+        Infosys.computeWage();
+        System.out.println(Infosys);
 
     }
 }

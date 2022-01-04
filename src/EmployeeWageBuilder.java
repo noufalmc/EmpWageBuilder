@@ -12,6 +12,7 @@ class Empinfo
     private int noOfWorkingDays;
     private int maxHourPerMonth;
     private int wage;
+    public  ArrayList<Integer> dailyWage=new ArrayList<>();
     public Empinfo(String company,int empRatePerHour,int noOfWorkingDays,int maxHourPerMonth)
     {
         this.Company=company;
@@ -37,7 +38,14 @@ class Empinfo
     }
     public String toString()
     {
-        return "Company= "+Company+" Total wage= "+wage;
+
+        String str="";
+        System.out.println("Company= "+Company+" Total wage= "+wage);
+        for (int i=0;i<dailyWage.size();i++)
+        {
+            str+="Daily Wage is "+dailyWage.get(i)+"\n";
+        }
+        return str;
     }
 
 }
@@ -63,6 +71,7 @@ class Emp implements IempInfo{
     {
         int EMP_HOUR = 0;
         int I = 0;
+        int C=0;
         int DailyWage = 0;
         int totalWage=0;
         while ((I < empinfo.getNoOfWorkingDays()) && (EMP_HOUR < empinfo.getMaxHourPerMonth())) {
@@ -78,9 +87,16 @@ class Emp implements IempInfo{
                 default:
                     EMP_HOUR = 0;
             }
-            I++;
+
+
             DailyWage =EMP_HOUR*empinfo.getEmpRatePerHour();
+            if(DailyWage>0)
+            {
+                empinfo.dailyWage.add(C,DailyWage);
+                C++;
+            }
             totalWage+= DailyWage;
+            I++;
         }
         return totalWage;
     }

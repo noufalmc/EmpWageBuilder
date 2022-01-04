@@ -36,6 +36,14 @@ class Empinfo
     {
         return empRatePerHour;
     }
+    public int getEmpWage()
+    {
+        return this.wage;
+    }
+    public String getCompanyName()
+    {
+        return this.Company;
+    }
     public String toString()
     {
 
@@ -64,7 +72,21 @@ class Emp implements IempInfo{
         for (int i=0;i<empInfoArray.size();i++)
         {
             empInfoArray.get(i).setTotalEmpWage(this.calcSalary(empInfoArray.get(i)));
+            System.out.println(empInfoArray.get(i).getEmpWage());
             System.out.println(""+empInfoArray.get(i));
+        }
+    }
+    public  void searchCompany()
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the Company Name");
+        String search=sc.next();
+        for (int i=0;i<empInfoArray.size();i++)
+        {
+            if(Objects.equals(empInfoArray.get(i).getCompanyName(),search))
+            {
+                System.out.println("Salary is"+empInfoArray.get(i).getEmpWage());
+            }
         }
     }
     public int calcSalary(Empinfo empinfo)
@@ -113,5 +135,6 @@ class EmployeeWageBuilder
         empObj.addEmpInfo("Airtel",150,12,50);
         empObj.addEmpInfo("DLF",180,10,50);
         empObj.computeWage();
+        empObj.searchCompany();
     }
 }

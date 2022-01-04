@@ -1,4 +1,4 @@
-
+import java.util.*;
 import java.util.Random;
 interface IempInfo
 {
@@ -44,24 +44,19 @@ class Empinfo
 class Emp implements IempInfo{
     public static final int IS_FULL_TIME = 1;
     public static final int IS_PART_TIME = 2;
-    private Empinfo[] empInfoArray;
+    private ArrayList<Empinfo> empInfoArray=new ArrayList<>();
     private int  noOfCompanies=0;
-    public Emp()
-    {
-        empInfoArray=new Empinfo[5];
-    }
     public void addEmpInfo(String CompanyName, int EmpRateHour, int noOfWorkingDays, int maxHourPerMonth)
     {
-        empInfoArray[noOfCompanies]=new Empinfo(CompanyName,EmpRateHour,noOfWorkingDays,maxHourPerMonth);
-        noOfCompanies++;
+        empInfoArray.add(new Empinfo(CompanyName,EmpRateHour,noOfWorkingDays,maxHourPerMonth));
     }
 
     public void computeWage()
     {
-        for (int i=0;i<noOfCompanies;i++)
+        for (int i=0;i<empInfoArray.size();i++)
         {
-            empInfoArray[i].setTotalEmpWage(this.calcSalary(empInfoArray[i]));
-            System.out.println(""+empInfoArray[i]);
+            empInfoArray.get(i).setTotalEmpWage(this.calcSalary(empInfoArray.get(i)));
+            System.out.println(""+empInfoArray.get(i));
         }
     }
     public int calcSalary(Empinfo empinfo)

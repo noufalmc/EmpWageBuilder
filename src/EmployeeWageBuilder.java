@@ -1,27 +1,76 @@
 
 import java.util.Random;
-
-class Emp {
-    public static final int IS_FULL_TIME = 1;
-    public static final int IS_PART_TIME = 2;
-    private final String company;
-    private final int empRateHour;
-    private final int noOfWorkingDays;
-    private final int maxHourPerMonth;
-    private int totalWage;
-    public Emp(String CompanyName, int EmpRateHour, int noOfWorkingDays, int maxHourPerMonth) {
-        this.company = CompanyName;
-        this.empRateHour = EmpRateHour;
-        this.noOfWorkingDays = noOfWorkingDays;
-        this.maxHourPerMonth = maxHourPerMonth;
+interface IempInfo
+{
+    public void addEmpInfo(String CompanyName, int EmpRateHour, int noOfWorkingDays, int maxHourPerMonth);
+    public void computeWage();
+}
+class Empinfo
+{
+    private String Company;
+    private int empRatePerHour;
+    private int noOfWorkingDays;
+    private int maxHourPerMonth;
+    private int wage;
+    public Empinfo(String company,int empRatePerHour,int noOfWorkingDays,int maxHourPerMonth)
+    {
+        this.Company=company;
+        this.empRatePerHour=empRatePerHour;
+        this.noOfWorkingDays=noOfWorkingDays;
+        this.maxHourPerMonth=maxHourPerMonth;
+    }
+    public void setTotalEmpWage(int empWage)
+    {
+        this.wage=empWage;
+    }
+    public int getNoOfWorkingDays()
+    {
+        return noOfWorkingDays;
+    }
+    public int getMaxHourPerMonth()
+    {
+        return maxHourPerMonth;
+    }
+    public int getEmpRatePerHour()
+    {
+        return empRatePerHour;
+    }
+    public String toString()
+    {
+        return "Company= "+Company+" Total wage= "+wage;
     }
 
-    public void computeWage() {
+}
+class Emp implements IempInfo{
+    public static final int IS_FULL_TIME = 1;
+    public static final int IS_PART_TIME = 2;
+    private Empinfo[] empInfoArray;
+    private int  noOfCompanies=0;
+    public Emp()
+    {
+        empInfoArray=new Empinfo[5];
+    }
+    public void addEmpInfo(String CompanyName, int EmpRateHour, int noOfWorkingDays, int maxHourPerMonth)
+    {
+        empInfoArray[noOfCompanies]=new Empinfo(CompanyName,EmpRateHour,noOfWorkingDays,maxHourPerMonth);
+        noOfCompanies++;
+    }
+
+    public void computeWage()
+    {
+        for (int i=0;i<noOfCompanies;i++)
+        {
+            empInfoArray[i].setTotalEmpWage(this.calcSalary(empInfoArray[i]));
+            System.out.println(""+empInfoArray[i]);
+        }
+    }
+    public int calcSalary(Empinfo empinfo)
+    {
         int EMP_HOUR = 0;
         int I = 0;
         int DailyWage = 0;
-        totalWage=0;
-        while ((I < noOfWorkingDays) && (EMP_HOUR < maxHourPerMonth)) {
+        int totalWage=0;
+        while ((I < empinfo.getNoOfWorkingDays()) && (EMP_HOUR < empinfo.getMaxHourPerMonth())) {
             Random random = new Random();
             int empCheck = random.nextInt(3);
             switch (empCheck) {
@@ -35,26 +84,23 @@ class Emp {
                     EMP_HOUR = 0;
             }
             I++;
-            DailyWage =EMP_HOUR*empRateHour;
+            DailyWage =EMP_HOUR*empinfo.getEmpRatePerHour();
             totalWage+= DailyWage;
         }
+        return totalWage;
     }
-    public String toString()
-    {
-        return "Company= "+company+" Total wage= "+totalWage;
-    }
+
 }
 class EmployeeWageBuilder
 {
     public  static void  main(String[] args)
     {
         System.out.println("Welcome To Employee Wage Builder");
-        Emp Tcs=new Emp("TCS",200,4,20);
-        Tcs.computeWage();
-        System.out.println(Tcs);
-        Emp Infosys=new Emp("Infosys",250,4,20);
-        Infosys.computeWage();
-        System.out.println(Infosys);
-
+        Emp empObj=new Emp();
+        empObj.addEmpInfo("Tcs",200,10,50);
+        empObj.addEmpInfo("InfoSys",220,10,50);
+        empObj.addEmpInfo("Airtel",150,12,50);
+        empObj.addEmpInfo("DLF",180,10,50);
+        empObj.computeWage();
     }
 }
